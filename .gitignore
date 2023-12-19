@@ -1,7 +1,9 @@
 /env
 .env
 
-__pycach__
-*.__pycach__
-/__pycach__
-__pycachs__
+__pycache__
+*.__pycache__
+/__pycache__
+__pycache__
+
+public/*
