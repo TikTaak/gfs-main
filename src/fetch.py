@@ -31,7 +31,7 @@ class Fetch(object):
         self.date = f"{date.year}{date.month}{int(date.day)-1}"
         
         
-        if (os.path.isdir(f'public/{self.date}')) and (not force):
+        if (os.path.isfile(f'public/{self.date}/gfs.t18z.pgrb2.0p25.f000')) and (not force):
             return self.date_instance
         
         else:

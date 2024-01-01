@@ -1,6 +1,7 @@
 import pygrib
 import xlsxwriter
 from progress.bar import Bar
+import time
 
 # {self.date_instance.year}{self.date_instance.month}{int(self.date_instance.day)-1}
 
@@ -21,6 +22,8 @@ class Convertor():
         for i in range(len(lats)):
             for j in range(len(lats[i])):
                 zojmoratab.append([i, j])
+                del j
+            del i
         ##################################
 
 
@@ -28,12 +31,15 @@ class Convertor():
         header = ["lat", "lon"]
         for index, grb in enumerate(grbs):
             header.append(grb.name)
+            del index
+            del grb
         ##################################
 
         def zojmoratab_serializer(matrix: list):
             satr = []
             for k in zojmoratab:
                 satr.append(matrix[k[0]][k[1]])
+                del k
             return satr
 
         body=[]
@@ -45,8 +51,13 @@ class Convertor():
         body.append(satr_lon)
 
         bar = Bar('load gribs', max=len(grbs))
-        for index, grb in enumerate(grbs):
+        # _count = 0
+        for grb in (grbs):
             body.append(zojmoratab_serializer(grb.values))
+            # time.sleep(0.5)
+            del grb
+            # _count+=1
+            # print(f"{_count}/{len(grbs)}")
             bar.next()
         bar.finish()
         
