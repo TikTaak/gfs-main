@@ -13,6 +13,29 @@ class Fetch(object):
     def __init__(self):
         self.url = config.GFS_LINK
         
+        
+    def update(self, force=False):
+        date = datetime.datetime.now() - datetime.timedelta(days=1)
+        self.date_instance = date
+        print(self.date_instance)
+        self.date = "{}{:0>2}{:0>2}".format(date.year, date.month, date.day)
+        print(self.date)
+        
+        
+        if (os.path.isfile(f'public/{self.date}/gfs.t18z.pgrb2.0p25.f000')) and (not force):
+            return self.date_instance
+        
+        else:
+            os.system(f"mkdir public/{self.date}")
+            
+            self.url = self.url.replace("{{year}}", str(date.year))
+            self.url = self.url.replace("{{month}}", "{:0>2}".format(str(date.month)))
+            self.url = self.url.replace("{{day}}", "{:0>2}".format(str(date.day)))
+            
+            print(self.url)
+            self.save_update()
+            return self.date_instance
+        
     def save_update(self):
         res = requests.get(self.url, stream=True)
         print(res.status_code)
@@ -24,27 +47,6 @@ class Fetch(object):
                 f.write(chunk)
                 f.flush()
         f.close()
-        
-    def update(self, force=False):
-        date = datetime.datetime.now()
-        self.date_instance = date
-        self.date = f"{date.year}{date.month}{int(date.day)-1}"
-        
-        
-        if (os.path.isfile(f'public/{self.date}/gfs.t18z.pgrb2.0p25.f000')) and (not force):
-            return self.date_instance
-        
-        else:
-            os.system(f"mkdir public/{self.date}")
-            
-            self.url = self.url.replace("{{year}}", str(date.year))
-            self.url = self.url.replace("{{month}}", str(date.month))
-            self.url = self.url.replace("{{day}}", str(date.day - 1))
-            
-            print(self.url)
-            self.save_update()
-            return self.date_instance
-        
             
             
         

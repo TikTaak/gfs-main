@@ -12,7 +12,16 @@ class Convertor():
     def grib_convert(self, date_instance):
         self.date_instance = date_instance
         
-        ogrb = pygrib.open(f'public/{date_instance.year}{date_instance.month}{int(date_instance.day)-1}/gfs.t18z.pgrb2.0p25.f000')  
+        
+        path = 'public/{}{:0>2}{:0>2}/gfs.t18z.pgrb2.0p25.f000'.format(
+            self.date_instance.year, 
+            self.date_instance.month, 
+            self.date_instance.day
+        )
+        
+        print(path)
+        ogrb = pygrib.open(path)
+        
         grbs = ogrb.read()
         lats, lons = grbs[0].latlons()
 
@@ -55,7 +64,7 @@ class Convertor():
         for grb in (grbs):
             body.append(zojmoratab_serializer(grb.values))
             # time.sleep(0.5)
-            del grb
+            grb = None
             # _count+=1
             # print(f"{_count}/{len(grbs)}")
             bar.next()
@@ -73,7 +82,11 @@ class Convertor():
         body = data["body"]
         date_instance = data["date_instance"]
         
-        workbook = xlsxwriter.Workbook(f"public/{self.date_instance.year}{self.date_instance.month}{int(self.date_instance.day)-1}/gfs.xlsx")
+        workbook = xlsxwriter.Workbook("public/{}{:2>0}{:2>0}/gfs.xlsx".format(
+            self.date_instance.year,
+            self.date_instance.month,
+            self.date_instance.day
+            ))
         worksheet = workbook.add_worksheet()
         
         for index, head in enumerate(header):
