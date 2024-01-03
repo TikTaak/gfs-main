@@ -82,7 +82,7 @@ class Convertor():
         body = data["body"]
         date_instance = data["date_instance"]
         
-        workbook = xlsxwriter.Workbook("public/{}{:2>0}{:2>0}/gfs.xlsx".format(
+        workbook = xlsxwriter.Workbook("public/{}{:0>2}{:0>2}/gfs.xlsx".format(
             self.date_instance.year,
             self.date_instance.month,
             self.date_instance.day
