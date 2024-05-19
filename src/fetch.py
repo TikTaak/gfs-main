@@ -4,6 +4,7 @@ import requests
 import datetime
 import os
 from clint.textui import progress
+import sys
 
 class Fetch(object):
     date = None
@@ -38,14 +39,20 @@ class Fetch(object):
         
     def save_update(self):
         res = requests.get(self.url, stream=True)
-        print(res.status_code)
+        print(f"{res.status_code = }")
         f = open(f"public/{self.date}/gfs.t18z.pgrb2.0p25.f000", "wb")
-        print(res.headers.get('content-length'))
-        total_length = int(res.headers.get('content-length'))
-        for chunk in progress.bar(res.iter_content(chunk_size=1024), expected_size=(total_length/1024) + 1): 
+        
+        downloaded: int = 0
+        for chunk in (res.iter_content(chunk_size=1024)): 
             if chunk:
+                # print(f"downloaded: {downloaded/(1024*1024):.2f} MB", end="\r")
+                # sys.stdout.flush()        
+                
+                downloaded += len(chunk)
                 f.write(chunk)
                 f.flush()
+                
+        print(f"downloaded: {downloaded/(1024*1024):.2f} MB")
         f.close()
             
             
