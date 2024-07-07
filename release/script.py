@@ -7,6 +7,7 @@ from clint.textui import progress
 from progress.bar import Bar
 
 GFS_LINK: str = "https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl?dir=%2Fgfs.{{year}}{{month}}{{day}}%2F18%2Fatmos&file=gfs.t18z.pgrb2.0p25.f003&all_var=on&all_lev=on&subregion=&toplat=40&leftlon=40&rightlon=65&bottomlat=20"
+# GFS_LINK: str = "https://nomads.ncep.noaa.gov/cgi-bin/filter_gfs_0p25.pl?dir=%2Fgfs.20240629%2F18%2Fatmos&file=gfs.t18z.pgrb2.0p25.f003&all_var=on&all_lev=on&subregion=&toplat=40&leftlon=40&rightlon=65&bottomlat=20"
 
 class Convertor():
     date_instance = None
