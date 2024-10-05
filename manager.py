@@ -21,7 +21,7 @@ def update_data():
     time.sleep(5)
 
 def convert_xlsx_to_csv():
-    read_file = pd.read_excel ("final.xlsx") 
+    read_file = pd.read_excel ("final.xlsx")
 
     read_file.to_csv ("final.csv", 
         index = None, 
