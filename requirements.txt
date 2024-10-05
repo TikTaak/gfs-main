@@ -1,6 +1,6 @@
-clint==0.5.1
-requests==2.25.1
-pygrib==2.1.5
+clint
+requests
+pygrib
 xlsxwriter
 progress
 Flask

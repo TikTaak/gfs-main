@@ -5,6 +5,7 @@ import requests
 import datetime
 import time
 import json
+import pandas as pd
 
 server_status: str = "off"
 # server_status: str = "ready"
@@ -18,6 +19,15 @@ def update_data():
     if server_status == "ready":
         requests.get("http://127.0.0.1:5000/update/")
     time.sleep(5)
+
+def convert_xlsx_to_csv():
+    read_file = pd.read_excel ("final.xlsx") 
+
+    read_file.to_csv ("final.csv", 
+        index = None, 
+        header=True
+    )
+
 
 def main():
     threading.Thread(target=run_server).start()
@@ -73,5 +83,11 @@ def main():
     print(f"downloaded: {downloaded/(1024*1024):.2f} MB")
     f.close()
     
+    print("Convert to csv ...")
+    convert_xlsx_to_csv()
+    
+    
 if (__name__ == "__main__"):
     main()
+    print("Done !! (final.csv & final.xlsx)")
+    exit()
