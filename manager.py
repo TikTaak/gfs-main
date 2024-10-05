@@ -1,4 +1,5 @@
 import os
+import sys
 import subprocess
 import threading
 import requests
@@ -90,4 +91,4 @@ def main():
 if (__name__ == "__main__"):
     main()
     print("Done !! (final.csv & final.xlsx)")
-    exit()
+    sys.exit()
